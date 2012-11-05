@@ -16,6 +16,8 @@
 
 @optional
 
+- (void) checkAvatarTapped:(id)sender event:(id)event;
+
 @required
 
 - (NSInteger)rowsForBubbleTable:(UIBubbleTableView *)tableView;

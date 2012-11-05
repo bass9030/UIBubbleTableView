@@ -26,6 +26,8 @@
 @synthesize bubbleSection = _bubbleSection;
 @synthesize typingBubble = _typingBubble;
 @synthesize showAvatars = _showAvatars;
+@synthesize activeAvatars = _activeAvatars;
+@synthesize touchResponder = _touchResponder;
 
 #pragma mark - Initializators
 
@@ -74,15 +76,17 @@
     return self;
 }
 
-#if !__has_feature(objc_arc)
+
 - (void)dealloc
 {
+#if !__has_feature(objc_arc)
     [_bubbleSection release];
 	_bubbleSection = nil;
 	_bubbleDataSource = nil;
     [super dealloc];
-}
 #endif
+}
+
 
 #pragma mark - Override
 
@@ -226,6 +230,10 @@
     
     cell.data = data;
     cell.showAvatar = self.showAvatars;
+    cell.activeAvatar = self.activeAvatars;
+    if (self.activeAvatars) {
+        [cell.avatarImage addTarget:self.touchResponder action:@selector(checkAvatarTapped:event:) forControlEvents:UIControlEventTouchUpInside];
+    }
     
     return cell;
 }
