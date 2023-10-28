@@ -57,6 +57,7 @@
     self.data = nil;
     self.customView = nil;
     self.bubbleImage = nil;
+    self.avatarImage = nil;
     [super dealloc];
 #endif
 }
@@ -74,7 +75,11 @@
     
     if (!self.bubbleImage)
     {
-        self.bubbleImage = [[UIImageView alloc] init];
+#if !__has_feature(objc_arc)
+        self.bubbleImage = [[[UIImageView alloc] init] autorelease];
+#else
+        self.bubbleImage = [[UIImageView alloc] init];        
+#endif
         [self addSubview:self.bubbleImage];
     }
     
